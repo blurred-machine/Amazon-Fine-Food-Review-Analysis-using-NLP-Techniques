@@ -70,7 +70,7 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    clf = joblib.load('model.pkl')
+    clf = joblib.load('model2.pkl')
     count_vect = joblib.load('count_vect.pkl')
     to_predict_list = request.form.to_dict()
     review_text = clean_text(to_predict_list['review_text'])

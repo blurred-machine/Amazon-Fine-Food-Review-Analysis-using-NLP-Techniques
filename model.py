@@ -93,9 +93,24 @@ joblib.dump(count_vect, 'count_vect.pkl')
 X = count_vect.transform(preprocessed_reviews)
 print(X.shape)
 Y = final['Score'].values
-clf = linear_model.SGDClassifier(max_iter=1000, tol=1e-3, eta0=0.1, alpha=0.001)
-clf.fit(X, Y)
-joblib.dump(clf, 'model.pkl')
+print(Y)
+
+
+
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Dropout
+classifier = Sequential()
+classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu', input_dim = X.shape[1]))
+classifier.add(Dense(units = 6, kernel_initializer = 'uniform', activation = 'relu'))
+classifier.add(Dense(units = 1, kernel_initializer = 'uniform', activation = 'sigmoid'))
+classifier.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics = ['accuracy'])
+classifier.fit(X, Y, batch_size = 10, epochs = 20)
+
+
+#clf = linear_model.SGDClassifier(max_iter=1000, tol=1e-3, eta0=0.1, alpha=0.001)
+#clf.fit(X, Y)
+joblib.dump(classifier, 'model2.pkl')
 
 
 # few reviews from
